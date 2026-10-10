@@ -1,0 +1,342 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rafvid — Share your moment</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root{font-family:Arial,sans-serif;color:#18364a;background:#f5f9fc}
+*{box-sizing:border-box}body{margin:0}
+header{background:white;border-bottom:1px solid #dce8f0;padding:16px 5%;display:flex;justify-content:space-between;align-items:center;gap:12px;position:sticky;top:0}
+.logo{font-size:25px;font-weight:800;color:#087eae}main{max-width:760px;margin:24px auto;padding:0 14px}
+.panel,.post{background:white;border:1px solid #dce8f0;border-radius:16px;padding:18px;margin-bottom:18px}
+h2{margin-top:0}input,textarea,button{font:inherit}
+input,textarea{width:100%;padding:12px;border:1px solid #cadce8;border-radius:10px;margin:6px 0 12px}
+button{background:#087eae;color:white;border:0;border-radius:10px;padding:11px 15px;cursor:pointer}
+button.secondary{background:#e8f4fa;color:#14506a}button:disabled{opacity:.5}
+.actions{display:flex;gap:8px;flex-wrap:wrap}.muted{color:#6b8291;font-size:13px}
+.media{width:100%;max-height:520px;object-fit:contain;background:#edf4f8;border-radius:12px;margin:10px 0}
+.comment{background:#f4f8fb;border-radius:9px;padding:8px;margin:6px 0;overflow-wrap:anywhere}
+.hidden{display:none}.status{margin:10px 0;color:#087eae;overflow-wrap:anywhere}
+@media(max-width:500px){header{padding:12px}main{margin:14px auto}.panel,.post{padding:13px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">🌊 Rafvid</div>
+  <button id="logout" class="secondary hidden">Keluar</button>
+</header>
+<main>
+  <p class="muted">Tempat berbagi momen kamu.</p>
+  <p id="status" class="status" role="status">Menghubungkan...</p>
+
+  <section id="auth" class="panel">
+    <h2>Gabung Rafvid</h2>
+    <form id="signup">
+      <h3>Buat akun</h3>
+      <label>Username</label>
+      <input id="su-name" minlength="3" maxlength="24" required
+        autocomplete="username" placeholder="contoh: rafikeren">
+      <label>Email</label>
+      <input id="su-email" type="email" required autocomplete="email">
+      <label>Password (minimal 8 karakter)</label>
+      <input id="su-pass" type="password" minlength="8" required
+        autocomplete="new-password">
+      <button>Daftar</button>
+    </form>
+    <hr>
+    <form id="login">
+      <h3>Sudah punya akun?</h3>
+      <label>Email</label>
+      <input id="li-email" type="email" required autocomplete="email">
+      <label>Password</label>
+      <input id="li-pass" type="password" required autocomplete="current-password">
+      <button>Login</button>
+    </form>
+  </section>
+
+  <section id="app" class="hidden">
+    <section class="panel">
+      <h2>Profil kamu</h2>
+      <form id="profile-form">
+        <label>Username</label>
+        <input id="profile-name" minlength="3" maxlength="24" required>
+        <button class="secondary">Simpan profil</button>
+      </form>
+    </section>
+
+    <section class="panel">
+      <h2>Buat postingan</h2>
+      <form id="upload-form">
+        <label>Foto atau video (maksimal 50 MB)</label>
+        <input id="media-file" type="file" accept="image/*,video/*" required>
+        <label>Caption</label>
+        <textarea id="caption" maxlength="2000" rows="3"
+          placeholder="Ceritakan momenmu..."></textarea>
+        <button id="upload-button">Posting</button>
+      </form>
+    </section>
+
+    <section>
+      <h2>Feed terbaru</h2>
+      <div id="feed"></div>
+    </section>
+  </section>
+</main>
+
+<script>
+const SUPABASE_URL = "https://lvsvqwbvcgtxhatfzmhy.supabase.co";
+const SUPABASE_KEY = "sb_publishable_ucda7S2oY6k7S0LPMbH1nQ_Mf06wNf2";
+const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+const $ = id => document.getElementById(id);
+let currentUser = null;
+
+function message(text) { $("status").textContent = text; }
+function showApp(user) {
+  currentUser = user;
+  $("auth").classList.toggle("hidden", !!user);
+  $("app").classList.toggle("hidden", !user);
+  $("logout").classList.toggle("hidden", !user);
+}
+
+function safeText(tag, text, className = "") {
+  const el = document.createElement(tag);
+  el.textContent = text ?? "";
+  if (className) el.className = className;
+  return el;
+}
+
+$("signup").addEventListener("submit", async e => {
+  e.preventDefault();
+  message("Membuat akun...");
+  const username = $("su-name").value.trim().toLowerCase();
+  if (!/^[a-z0-9_]{3,24}$/.test(username)) {
+    return message("Username harus 3–24 karakter: huruf, angka, atau _.");
+  }
+  const { error } = await db.auth.signUp({
+    email: $("su-email").value.trim(),
+    password: $("su-pass").value,
+    options: { data: { username } }
+  });
+  if (error) return message(error.message);
+  message("Pendaftaran berhasil. Jika diminta, cek email untuk verifikasi, lalu login.");
+});
+
+$("login").addEventListener("submit", async e => {
+  e.preventDefault();
+  message("Login...");
+  const { error } = await db.auth.signInWithPassword({
+    email: $("li-email").value.trim(),
+    password: $("li-pass").value
+  });
+  if (error) return message(error.message);
+  message("Login berhasil.");
+});
+
+$("logout").addEventListener("click", async () => {
+  const { error } = await db.auth.signOut();
+  if (error) return message(error.message);
+  message("Kamu sudah keluar.");
+});
+
+async function loadProfile() {
+  if (!currentUser) return;
+  const { data, error } = await db.from("profiles")
+    .select("username").eq("id", currentUser.id).single();
+  if (error) return message("Gagal memuat profil: " + error.message);
+  $("profile-name").value = data.username;
+}
+
+$("profile-form").addEventListener("submit", async e => {
+  e.preventDefault();
+  const username = $("profile-name").value.trim().toLowerCase();
+  if (!/^[a-z0-9_]{3,24}$/.test(username)) {
+    return message("Username harus 3–24 karakter: huruf, angka, atau _.");
+  }
+  const { error } = await db.from("profiles")
+    .update({ username }).eq("id", currentUser.id);
+  if (error) return message("Gagal menyimpan profil. Username mungkin sudah dipakai.");
+  message("Profil tersimpan.");
+  await loadFeed();
+});
+
+$("upload-form").addEventListener("submit", async e => {
+  e.preventDefault();
+  if (!currentUser) return message("Login dulu.");
+  const file = $("media-file").files[0];
+  if (!file) return message("Pilih foto atau video.");
+  if (file.size > 50 * 1024 * 1024) return message("File maksimal 50 MB.");
+  if (!file.type.startsWith("image/") && !file.type.startsWith("video/")) {
+    return message("Jenis file tidak didukung.");
+  }
+
+  const button = $("upload-button");
+  button.disabled = true;
+  message("Mengunggah media...");
+  try {
+    const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
+    const path = `${currentUser.id}/${crypto.randomUUID()}-${safeName}`;
+    const { error: uploadError } = await db.storage
+      .from("rafvid-media").upload(path, file, { upsert: false });
+    if (uploadError) throw uploadError;
+
+    const { data: urlData } = db.storage.from("rafvid-media").getPublicUrl(path);
+    const mediaType = file.type.startsWith("video/") ? "video" : "image";
+    const { error: postError } = await db.from("posts").insert({
+      author_id: currentUser.id,
+      caption: $("caption").value.trim(),
+      media_url: urlData.publicUrl,
+      media_type: mediaType
+    });
+    if (postError) {
+      await db.storage.from("rafvid-media").remove([path]);
+      throw postError;
+    }
+    $("upload-form").reset();
+    message("Postingan berhasil diunggah!");
+    await loadFeed();
+  } catch (err) {
+    message("Upload gagal: " + err.message);
+  } finally {
+    button.disabled = false;
+  }
+});
+
+async function toggleLike(postId, alreadyLiked) {
+  if (!currentUser) return message("Login dulu.");
+  let result;
+  if (alreadyLiked) {
+    result = await db.from("likes")
+      .delete().eq("post_id", postId).eq("user_id", currentUser.id);
+  } else {
+    result = await db.from("likes")
+      .insert({ post_id: postId, user_id: currentUser.id });
+  }
+  if (result.error) message("Like gagal: " + result.error.message);
+  await loadFeed();
+}
+
+async function addComment(postId, input) {
+  const body = input.value.trim();
+  if (!body) return;
+  const { error } = await db.from("comments").insert({
+    post_id: postId, user_id: currentUser.id, body
+  });
+  if (error) return message("Komentar gagal: " + error.message);
+  input.value = "";
+  await loadFeed();
+}
+
+async function deletePost(post) {
+  if (!confirm("Hapus postingan ini?")) return;
+  // Only remove a file from this app's own storage bucket.
+  const prefix = `${SUPABASE_URL}/storage/v1/object/public/rafvid-media/`;
+  if (post.media_url.startsWith(prefix)) {
+    const path = decodeURIComponent(post.media_url.slice(prefix.length));
+    const { error: fileError } = await db.storage.from("rafvid-media").remove([path]);
+    if (fileError) return message("Gagal menghapus media: " + fileError.message);
+  }
+  const { error } = await db.from("posts").delete().eq("id", post.id);
+  if (error) return message("Gagal menghapus postingan: " + error.message);
+  await loadFeed();
+}
+
+async function loadFeed() {
+  const feed = $("feed");
+  feed.replaceChildren(safeText("p", "Memuat feed...", "muted"));
+  const { data: posts, error } = await db.from("posts")
+    .select("id, author_id, caption, media_url, media_type, created_at, profiles(username), likes(user_id), comments(id, body, user_id, created_at, profiles(username))")
+    .order("created_at", { ascending: false }).limit(50);
+
+  if (error) {
+    feed.replaceChildren(safeText("p", "Feed gagal dimuat: " + error.message));
+    return;
+  }
+  feed.replaceChildren();
+  if (!posts.length) {
+    feed.append(safeText("p", "Belum ada postingan. Jadilah yang pertama!", "muted"));
+    return;
+  }
+
+  for (const post of posts) {
+    const card = document.createElement("article");
+    card.className = "post";
+    const profile = Array.isArray(post.profiles) ? post.profiles[0] : post.profiles;
+    const author = profile?.username || "pengguna";
+    const header = document.createElement("div");
+    header.append(safeText("strong", "@" + author));
+    header.append(safeText("p", new Date(post.created_at).toLocaleString("id-ID"), "muted"));
+    card.append(header, safeText("p", post.caption));
+
+    let media;
+    if (post.media_type === "video") {
+      media = document.createElement("video");
+      media.controls = true;
+      media.preload = "metadata";
+    } else {
+      media = document.createElement("img");
+      media.alt = "Foto postingan";
+      media.loading = "lazy";
+    }
+    media.src = post.media_url;
+    media.className = "media";
+    card.append(media);
+
+    const liked = post.likes.some(like => like.user_id === currentUser?.id);
+    const likeButton = safeText("button", `${liked ? "♥" : "♡"} ${post.likes.length} Like`);
+    likeButton.className = "secondary";
+    likeButton.addEventListener("click", () => toggleLike(post.id, liked));
+    card.append(likeButton);
+
+    if (post.author_id === currentUser?.id) {
+      const del = safeText("button", "Hapus postingan");
+      del.addEventListener("click", () => deletePost(post));
+      card.append(del);
+    }
+
+    card.append(safeText("h3", "Komentar"));
+    for (const comment of post.comments) {
+      const cp = Array.isArray(comment.profiles) ? comment.profiles[0] : comment.profiles;
+      card.append(safeText("div", `@${cp?.username || "pengguna"}: ${comment.body}`, "comment"));
+    }
+
+    const form = document.createElement("form");
+    const input = document.createElement("input");
+    input.placeholder = "Tulis komentar...";
+    input.maxLength = 1000;
+    input.required = true;
+    const submit = safeText("button", "Kirim");
+    form.append(input, submit);
+    form.addEventListener("submit", e => {
+      e.preventDefault();
+      addComment(post.id, input);
+    });
+    card.append(form);
+    feed.append(card);
+  }
+}
+
+async function refresh() {
+  const { data: { session } } = await db.auth.getSession();
+  showApp(session?.user || null);
+  if (currentUser) {
+    await loadProfile();
+    await loadFeed();
+    message("Kamu login. Selamat datang di Rafvid!");
+  } else {
+    $("feed").replaceChildren();
+    message("Daftar atau login untuk mulai berbagi.");
+  }
+}
+
+db.auth.onAuthStateChange((_event, session) => {
+  showApp(session?.user || null);
+  setTimeout(() => refresh(), 0);
+});
+refresh();
+</script>
+</body>
+</html>
