@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#f5fbfd">
+<title>Rafvid — Cerita mengalir</title>
+<style>
+:root{color-scheme:light;--blue:#087da5;--blue2:#0b6488;--ink:#173441;--muted:#6f8791;--line:#dce9ed;--wash:#f3f9fb;--white:#fff;--pale:#e9f5f8}
+*{box-sizing:border-box}body{margin:0;background:#f5fafc;color:var(--ink);font:15px/1.45 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}button,input,textarea{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid #71c5e2;outline-offset:2px}.app{min-height:100vh}.topbar{height:68px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 max(20px,calc((100vw - 1120px)/2));position:sticky;top:0;z-index:5;gap:18px}.brand{display:flex;align-items:center;gap:9px;text-decoration:none;color:var(--ink);font-weight:850;font-size:25px;letter-spacing:-1.1px}.brandmark{width:35px;height:35px;border-radius:10px;background:#087da5;color:white;display:grid;place-items:center;font-size:22px;font-weight:700}.brand span small{display:block;font-size:9px;letter-spacing:1.5px;font-weight:700;color:#66838e;margin-top:-3px}.search{flex:1;max-width:390px;position:relative}.search input{width:100%;background:#f4f8fa;border:1px solid #e1ebef;border-radius:10px;padding:10px 14px 10px 38px;color:var(--ink);outline:none}.search:before{content:"⌕";position:absolute;left:13px;top:4px;font-size:24px;color:#7a929b}.topright{display:flex;align-items:center;gap:10px}.btn{border:1px solid var(--line);border-radius:9px;padding:9px 13px;background:#fff;color:var(--ink);font-weight:700}.btn.blue{background:var(--blue);border-color:var(--blue);color:#fff}.btn.blue:hover{background:var(--blue2)}.user-chip{display:flex;align-items:center;gap:8px;border:0;background:transparent;padding:4px;color:var(--ink);font-weight:750}.avatar{width:34px;height:34px;flex:0 0 34px;display:grid;place-items:center;border-radius:50%;background:#d9eef5;color:#075f80;font-weight:850;overflow:hidden}.avatar img{width:100%;height:100%;object-fit:cover}.layout{max-width:1120px;margin:auto;padding:24px 20px;display:grid;grid-template-columns:205px minmax(0,600px) 245px;gap:24px;align-items:start}.left{position:sticky;top:88px}.navgroup{background:#fff;border:1px solid var(--line);border-radius:12px;padding:8px;margin-bottom:14px}.nav{width:100%;display:flex;align-items:center;gap:12px;text-align:left;padding:11px;border-radius:8px;border:0;background:transparent;color:#4b6975;font-weight:650}.nav .ico{font-size:19px;width:22px;text-align:center}.nav:hover,.nav.active{background:#eaf5f8;color:#086d91}.sidebar-note{padding:15px 13px;color:#6b8791;font-size:12px;line-height:1.65}.sidebar-note strong{display:block;color:#2b5667;font-size:13px;margin-bottom:4px}.center{min-width:0}.welcome{background:#fff;border:1px solid var(--line);border-radius:13px;padding:19px 20px;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;gap:10px}.welcome h1{font-size:22px;letter-spacing:-.6px;margin:0 0 5px}.welcome p{margin:0;color:var(--muted);font-size:13px}.welcome .sea-art{font-size:42px;color:#0c84ad;padding:0 8px}.composer{display:flex;align-items:center;gap:11px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:13px;margin-bottom:19px}.composer input{min-width:0;flex:1;border:0;background:#f4f8fa;border-radius:9px;padding:11px 12px;outline:none}.composer .btn{white-space:nowrap}.feedbar{display:flex;justify-content:space-between;align-items:center;margin:0 2px 12px}.feedbar h2{font-size:16px;margin:0}.tabs{display:flex;gap:5px}.tab{border:0;background:transparent;padding:7px 10px;border-radius:7px;color:#69828c;font-size:12px;font-weight:750}.tab.active{background:#e5f3f7;color:#086d91}.post{background:#fff;border:1px solid var(--line);border-radius:12px;margin-bottom:14px;overflow:hidden}.posthead{display:flex;align-items:center;gap:10px;padding:14px 15px 10px}.postwho{font-weight:800;font-size:13px}.posttime{font-size:11px;color:#879aa2;margin-top:2px}.postmenu{margin-left:auto;border:0;background:transparent;color:#81959d;font-size:21px}.caption{padding:0 15px 12px;white-space:pre-wrap;overflow-wrap:anywhere}.postmedia{display:block;width:100%;max-height:600px;object-fit:contain;background:#eef4f6}.postfoot{display:flex;align-items:center;gap:5px;padding:10px 12px;border-top:1px solid #edf2f4}.postaction{background:transparent;border:0;color:#5f7b86;border-radius:7px;padding:7px 9px;font-size:13px}.postaction:hover,.postaction.liked{background:#eef7fa;color:#087da5}.postaction.share{margin-left:auto}.right{position:sticky;top:88px}.card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:15px;margin-bottom:14px}.card h3{font-size:14px;margin:0 0 12px}.topic{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid #edf2f4}.topic:last-child{border:0;padding-bottom:0}.topicicon{width:35px;height:35px;border-radius:9px;background:#eaf5f8;display:grid;place-items:center;font-size:18px}.topic b{display:block;font-size:12px}.topic small{color:#82969e;font-size:11px}.mini-profile{display:flex;align-items:center;gap:10px}.mini-profile .muted{font-size:11px;color:var(--muted)}.empty{text-align:center;background:#fff;border:1px dashed #c9dce3;border-radius:12px;padding:35px 18px;color:#78909a}.empty .symbol{font-size:34px}.empty h3{color:#244958;margin:8px 0 4px;font-size:16px}.empty p{margin:0 0 15px;font-size:13px}.footer{font-size:11px;color:#8ba0a8;line-height:1.8;padding:0 4px}.modal{display:none;position:fixed;inset:0;z-index:10;background:#15374470;align-items:center;justify-content:center;padding:16px}.modal.show{display:flex}.dialog{width:min(440px,100%);max-height:90vh;overflow:auto;background:#fff;border-radius:15px;padding:22px;border:1px solid #d8e7ec;box-shadow:0 18px 65px #18384730}.dialog h2{margin:0 0 5px;font-size:21px;letter-spacing:-.4px}.dialog .sub{color:var(--muted);font-size:13px;margin:0 0 17px}.field{margin:12px 0}.field label{display:block;font-size:12px;font-weight:750;color:#466671;margin-bottom:6px}.field input,.field textarea{width:100%;border:1px solid #d5e3e8;border-radius:9px;padding:11px;background:#fbfdfe;color:var(--ink);outline:none}.field textarea{min-height:86px;resize:vertical}.field input:focus,.field textarea:focus{border-color:#48a9c8}.dialogactions{display:flex;justify-content:flex-end;gap:8px;margin-top:17px}.switchauth{font-size:13px;color:#6b838d;text-align:center;margin-top:15px}.textbtn{border:0;background:transparent;color:#087da5;font-weight:800;padding:0}.notice{font-size:11px;line-height:1.5;color:#81959d;background:#f3f8fa;border-radius:8px;padding:10px;margin-top:10px}.toast{display:none;position:fixed;z-index:20;bottom:22px;left:50%;transform:translateX(-50%);background:#163d4d;color:#fff;padding:11px 16px;border-radius:9px;box-shadow:0 6px 25px #15374425;font-size:13px;max-width:90vw}.mobilebar{display:none}
+@media(max-width:990px){.layout{grid-template-columns:180px minmax(0,1fr)}.right{display:none}.topbar{padding:0 18px}.search{max-width:320px}}
+@media(max-width:650px){.topbar{height:60px;padding:0 12px;gap:10px}.brand{font-size:22px}.brandmark{width:31px;height:31px}.brand span small{display:none}.search{max-width:none}.topright .btn.blue{padding:8px 10px;font-size:12px}.topright .user-chip .username{display:none}.layout{display:block;padding:14px 11px 80px}.left{display:none}.welcome{padding:16px}.welcome h1{font-size:20px}.welcome .sea-art{font-size:32px}.composer{padding:10px;gap:7px}.composer .avatar{display:none}.composer input{font-size:13px;padding:10px}.composer .btn{padding:9px;font-size:12px}.post{border-radius:11px}.mobilebar{position:fixed;z-index:6;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--line);display:flex;justify-content:space-around;padding:8px 4px calc(8px + env(safe-area-inset-bottom))}.mobilebar button{display:grid;justify-items:center;gap:2px;background:transparent;border:0;color:#7b919a;font-size:10px}.mobilebar b{font-size:20px;font-weight:500}.mobilebar button.active{color:#087da5}.feedbar h2{font-size:15px}.tab{padding:7px 8px}}
+</style>
+</head>
+<body>
+<div class="app">
+<header class="topbar">
+ <a class="brand" href="#" aria-label="Rafvid beranda"><div class="brandmark">≋</div><span>rafvid<small>CERITA MENGALIR</small></span></a>
+ <div class="search"><input id="searchInput" placeholder="Cari kreator atau caption..." aria-label="Cari postingan"></div>
+ <div class="topright" id="topright"><button class="btn" id="loginTop">Masuk</button><button class="btn blue" id="signupTop">Daftar</button></div>
+</header>
+<div class="layout">
+ <aside class="left">
+  <div class="navgroup">
+   <button class="nav active" data-filter="Semua"><span class="ico">⌂</span> Beranda</button>
+   <button class="nav" data-filter="Video"><span class="ico">▷</span> Video</button>
+   <button class="nav" data-filter="Foto"><span class="ico">▧</span> Foto</button>
+   <button class="nav" id="navProfile"><span class="ico">◉</span> Profil saya</button>
+   <button class="nav" id="navUpload"><span class="ico">＋</span> Buat postingan</button>
+  </div>
+  <div class="sidebar-note"><strong>Rafvid, ruang berbagi.</strong>Foto, video, dan cerita sehari-hari. Tetap sopan dan hormati karya orang lain.</div>
+ </aside>
+ <main class="center">
+  <section class="welcome"><div><h1>Halo, selamat datang di Rafvid.</h1><p>Tempat cerita dan momenmu mengalir bersama.</p></div><div class="sea-art" aria-hidden="true">〰</div></section>
+  <section class="composer"><div class="avatar" id="composeAvatar">R</div><input id="quickCaption" placeholder="Bagikan momenmu ke Rafvid..." maxlength="500"><button class="btn blue" id="uploadBtn">＋ Buat</button></section>
+  <div class="feedbar"><h2 id="feedTitle">Postingan terbaru</h2><div class="tabs"><button class="tab active" data-filter="Semua">Semua</button><button class="tab" data-filter="Foto">Foto</button><button class="tab" data-filter="Video">Video</button></div></div>
+  <div id="feed"></div>
+ </main>
+ <aside class="right">
+  <section class="card" id="profileCard"><h3>Akun kamu</h3><div class="mini-profile"><div class="avatar">?</div><div><b style="font-size:13px">Belum masuk</b><div class="muted">Masuk untuk membuat profil</div></div></div><button class="btn blue" id="rightLogin" style="width:100%;margin-top:13px">Masuk / Daftar</button></section>
+  <section class="card"><h3>Jelajahi topik</h3><div class="topic"><div class="topicicon">🏝️</div><div><b>#Pantai</b><small>Suasana pesisir</small></div></div><div class="topic"><div class="topicicon">🐠</div><div><b>#Laut</b><small>Keindahan bawah laut</small></div></div><div class="topic"><div class="topicicon">🌅</div><div><b>#Senja</b><small>Momen favoritmu</small></div></div></section>
+  <div class="footer">Tentang Rafvid · Panduan komunitas<br>© 2026 Rafvid</div>
+ </aside>
+</div>
+<nav class="mobilebar"><button class="active" data-filter="Semua"><b>⌂</b>Beranda</button><button data-filter="Video"><b>▷</b>Video</button><button id="mobileCreate"><b>＋</b>Buat</button><button id="mobileProfile"><b>◉</b>Profil</button></nav>
+</div>
+<div class="modal" id="authModal"><div class="dialog">
+ <h2 id="authTitle">Buat akun Rafvid</h2><p class="sub" id="authSub">Punya ruang sendiri untuk berbagi cerita.</p>
+ <div class="field" id="nameField"><label for="authName">Nama tampilan</label><input id="authName" maxlength="30" placeholder="Nama kamu"></div>
+ <div class="field"><label for="authEmail">Email</label><input id="authEmail" type="email" maxlength="100" placeholder="kamu@email.com" autocomplete="username"></div>
+ <div class="field"><label for="authPassword">Kata sandi</label><input id="authPassword" type="password" minlength="6" maxlength="80" placeholder="Minimal 6 karakter" autocomplete="current-password"></div>
+ <div class="notice">Demo ini menyimpan akun hanya di browser/perangkat ini. Jangan gunakan kata sandi asli. Akun belum bisa dipakai di perangkat lain.</div>
+ <div class="dialogactions"><button class="btn" id="authCancel">Batal</button><button class="btn blue" id="authSubmit">Buat akun</button></div>
+ <div class="switchauth"><span id="switchText">Sudah punya akun?</span> <button class="textbtn" id="switchMode">Masuk</button></div>
+</div></div>
+<div class="modal" id="postModal"><div class="dialog">
+ <h2>Buat postingan</h2><p class="sub">Bagikan foto atau video ke feed Rafvid.</p>
+ <div class="field"><label for="postCaption">Caption</label><textarea id="postCaption" maxlength="500" placeholder="Ceritakan momen ini..."></textarea></div>
+ <div class="field"><label for="postFile">Foto atau video</label><input id="postFile" type="file" accept="image/*,video/*"></div>
+ <div class="notice">Batas demo 12 MB per file. File dan postingan hanya tersimpan di browser ini.</div>
+ <div class="dialogactions"><button class="btn" id="postCancel">Batal</button><button class="btn blue" id="postSubmit">Terbitkan</button></div>
+</div></div>
+<div class="modal" id="profileModal"><div class="dialog">
+ <h2>Profil saya</h2><p class="sub">Identitas akun Rafvid kamu di perangkat ini.</p>
+ <div style="display:flex;align-items:center;gap:12px;margin:18px 0"><div class="avatar" id="profileAvatar" style="width:50px;height:50px">R</div><div><b id="profileName">Nama</b><div id="profileEmail" style="font-size:12px;color:#708993"></div><div id="profileStats" style="font-size:12px;color:#708993;margin-top:4px"></div></div></div>
+ <div class="field"><label for="editName">Ubah nama tampilan</label><input id="editName" maxlength="30" placeholder="Nama kamu"></div>
+ <div class="dialogactions"><button class="btn" id="profileClose">Tutup</button><button class="btn blue" id="saveProfile">Simpan profil</button><button class="btn" id="logoutBtn">Keluar</button></div>
+</div></div>
+<div class="toast" id="toast"></div>
+<script>
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const KEYS={users:'rafvid_demo_users_v2',posts:'rafvid_demo_posts_v2',session:'rafvid_demo_session_v2'};
+let users=read(KEYS.users,[]),posts=read(KEYS.posts,[]),currentUser=null,mode='signup',filter='Semua',query='',toastTimer;
+function read(k,fallback){try{return JSON.parse(localStorage.getItem(k)||'null')??fallback}catch(e){return fallback}}
+function save(k,v){try{localStorage.setItem(k,JSON.stringify(v));return true}catch(e){toast('Penyimpanan browser penuh. Hapus beberapa postingan dan coba lagi.');return false}}
+function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function toast(msg){let t=$('#toast');t.textContent=msg;t.style.display='block';clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.style.display='none',2800)}
+function stamp(){return new Date().toLocaleString('id-ID',{dateStyle:'medium',timeStyle:'short'})}
+function avatarHTML(name){return esc((name||'?').trim().slice(0,1).toUpperCase()||'?')}
+function showModal(id){$('#'+id).classList.add('show')}function hideModal(id){$('#'+id).classList.remove('show')}
+function setMode(m){mode=m;$('#authTitle').textContent=m==='signup'?'Buat akun Rafvid':'Masuk ke Rafvid';$('#authSub').textContent=m==='signup'?'Punya ruang sendiri untuk berbagi cerita.':'Lanjutkan berbagi cerita dari akunmu.';$('#nameField').style.display=m==='signup'?'block':'none';$('#authSubmit').textContent=m==='signup'?'Buat akun':'Masuk';$('#switchText').textContent=m==='signup'?'Sudah punya akun?':'Belum punya akun?';$('#switchMode').textContent=m==='signup'?'Masuk':'Daftar';$('#authPassword').autocomplete=m==='signup'?'new-password':'current-password'}
+function openAuth(m='signup'){setMode(m);$('#authName').value='';$('#authEmail').value='';$('#authPassword').value='';showModal('authModal')}
+function updateUserUI(){
+ const top=$('#topright');
+ if(currentUser){top.innerHTML=`<button class="btn blue" id="topCreate">＋ Buat</button><button class="user-chip" id="topProfile"><span class="avatar">${avatarHTML(currentUser.name)}</span><span class="username">${esc(currentUser.name)}</span></button>`;$('#topCreate').onclick=()=>openPost();$('#topProfile').onclick=openProfile;
+ $('#composeAvatar').textContent=currentUser.name.slice(0,1).toUpperCase();
+ $('#profileCard').innerHTML=`<h3>Akun kamu</h3><div class="mini-profile"><div class="avatar">${avatarHTML(currentUser.name)}</div><div><b style="font-size:13px">${esc(currentUser.name)}</b><div class="muted">@${esc(currentUser.email.split('@')[0])}</div></div></div><button class="btn" id="rightProfile" style="width:100%;margin-top:13px">Lihat profil</button>`;$('#rightProfile').onclick=openProfile;
+ }else{top.innerHTML='<button class="btn" id="loginTop">Masuk</button><button class="btn blue" id="signupTop">Daftar</button>';$('#loginTop').onclick=()=>openAuth('login');$('#signupTop').onclick=()=>openAuth('signup');$('#composeAvatar').textContent='R';$('#profileCard').innerHTML='<h3>Akun kamu</h3><div class="mini-profile"><div class="avatar">?</div><div><b style="font-size:13px">Belum masuk</b><div class="muted">Masuk untuk membuat profil</div></div></div><button class="btn blue" id="rightLogin" style="width:100%;margin-top:13px">Masuk / Daftar</button>';$('#rightLogin').onclick=()=>openAuth('signup')}
+}
+function openProfile(){if(!currentUser){openAuth('login');return}$('#profileAvatar').textContent=avatarHTML(currentUser.name);$('#profileName').textContent=currentUser.name;$('#profileEmail').textContent=currentUser.email;$('#editName').value=currentUser.name;$('#profileStats').textContent=posts.filter(p=>p.userId===currentUser.id).length+' postingan';showModal('profileModal')}
+function openPost(){if(!currentUser){openAuth('signup');toast('Buat akun atau masuk dulu untuk posting.');return}$('#postCaption').value=$('#quickCaption').value||'';$('#postFile').value='';showModal('postModal')}
+function render(){
+ let visible=posts.filter(p=>(filter==='Semua'||p.type===filter)&&(!query||(p.caption+' '+p.creator).toLowerCase().includes(query.toLowerCase()))).sort((a,b)=>b.created-a.created);
+ $('#feedTitle').textContent=query?'Hasil pencarian':filter==='Semua'?'Postingan terbaru':filter+' terbaru';
+ $('#feed').innerHTML=visible.length?visible.map(p=>`<article class="post"><div class="posthead"><div class="avatar">${avatarHTML(p.creator)}</div><div><div class="postwho">${esc(p.creator)}${currentUser&&p.userId===currentUser.id?' <span style="color:#087da5;font-size:10px">· Kamu</span>':''}</div><div class="posttime">${esc(p.date)} · ${p.type}</div></div><button class="postmenu" data-menu="${p.id}" title="Opsi postingan">···</button></div>${p.caption?`<div class="caption">${esc(p.caption)}</div>`:''}${p.url?(p.type==='Video'?`<video class="postmedia" src="${p.url}" controls playsinline preload="metadata"></video>`:`<img class="postmedia" src="${p.url}" alt="Foto dari ${esc(p.creator)}" loading="lazy">`):''}<div class="postfoot"><button class="postaction ${currentUser&&p.likesBy?.includes(currentUser.id)?'liked':''}" data-like="${p.id}">${currentUser&&p.likesBy?.includes(currentUser.id)?'♥':'♡'} Suka ${p.likesBy?.length||0}</button><button class="postaction" data-comment="${p.id}">◯ Komentar</button><button class="postaction share" data-share="${p.id}">↗ Bagikan</button></div></article>`).join(''):`<div class="empty"><div class="symbol">🌊</div><h3>${query?'Belum ada hasil':'Belum ada postingan'}</h3><p>${query?'Coba kata pencarian lain.':'Mulai dengan membagikan foto atau video pertamamu.'}</p><button class="btn blue" id="emptyCreate">＋ Buat postingan</button></div>`;
+ $('#emptyCreate')?.addEventListener('click',openPost);
+ $$('.tab').forEach(b=>b.classList.toggle('active',b.dataset.filter===filter));$$('.nav[data-filter]').forEach(b=>b.classList.toggle('active',b.dataset.filter===filter));$$('.mobilebar [data-filter]').forEach(b=>b.classList.toggle('active',b.dataset.filter===filter));
+}
+function setFilter(f){filter=f;render()}
+$('#authSubmit').onclick=()=>{
+ const email=$('#authEmail').value.trim().toLowerCase(),pass=$('#authPassword').value,name=$('#authName').value.trim();
+ if(!email||!email.includes('@')){toast('Masukkan alamat email yang valid.');return}
+ if(pass.length<6){toast('Kata sandi demo minimal 6 karakter.');return}
+ if(mode==='signup'){
+  if(!name){toast('Isi nama tampilan dulu.');return}
+  if(users.some(u=>u.email===email)){toast('Email sudah terdaftar di browser ini. Coba masuk.');return}
+  const user={id:'u'+Date.now().toString(36)+Math.random().toString(36).slice(2,7),name,email,pass};users.push(user);if(!save(KEYS.users,users))return;currentUser=user;save(KEYS.session,user.id);hideModal('authModal');updateUserUI();render();toast('Akun demo berhasil dibuat. Selamat datang!');
+ }else{
+  const user=users.find(u=>u.email===email&&u.pass===pass);
+  if(!user){toast('Email atau kata sandi tidak cocok di browser ini.');return}
+  currentUser=user;save(KEYS.session,user.id);hideModal('authModal');updateUserUI();render();toast('Berhasil masuk. Halo, '+user.name+'!');
+ }
+};
+$('#switchMode').onclick=()=>setMode(mode==='signup'?'login':'signup');$('#authCancel').onclick=()=>hideModal('authModal');
+$('#uploadBtn').onclick=openPost;$('#navUpload').onclick=openPost;$('#mobileCreate').onclick=openPost;$('#quickCaption').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();openPost()}});
+$('#postCancel').onclick=()=>hideModal('postModal');
+$('#postSubmit').onclick=()=>{
+ if(!currentUser){hideModal('postModal');openAuth('signup');return}
+ const file=$('#postFile').files[0],caption=$('#postCaption').value.trim();
+ if(!file){toast('Pilih foto atau video dulu.');return}
+ const type=file.type.startsWith('video/')?'Video':file.type.startsWith('image/')?'Foto':'';
+ if(!type){toast('Pilih file foto atau video yang valid.');return}
+ if(file.size>12*1024*1024){toast('Ukuran file maksimal 12 MB untuk demo.');return}
+ const reader=new FileReader();reader.onload=()=>{const p={id:'p'+Date.now().toString(36)+Math.random().toString(36).slice(2,6),userId:currentUser.id,creator:currentUser.name,caption,type,url:reader.result,date:stamp(),created:Date.now(),likesBy:[]};posts.unshift(p);if(save(KEYS.posts,posts)){hideModal('postModal');$('#quickCaption').value='';setFilter('Semua');toast('Postingan diterbitkan di browser ini.')}};reader.onerror=()=>toast('File gagal dibaca. Coba file lain.');reader.readAsDataURL(file)
+};
+$('#feed').addEventListener('click',e=>{
+ const like=e.target.closest('[data-like]');if(like){if(!currentUser){openAuth('login');toast('Masuk dulu untuk menyukai postingan.');return}const p=posts.find(x=>x.id===like.dataset.like);if(p){p.likesBy=p.likesBy||[];p.likesBy=p.likesBy.includes(currentUser.id)?p.likesBy.filter(id=>id!==currentUser.id):[...p.likesBy,currentUser.id];save(KEYS.posts,posts);render()}return}
+ const menu=e.target.closest('[data-menu]');if(menu){const p=posts.find(x=>x.id===menu.dataset.menu);if(!p)return;if(currentUser&&p.userId===currentUser.id){if(confirm('Hapus postingan milikmu?')){posts=posts.filter(x=>x.id!==p.id);save(KEYS.posts,posts);render();toast('Postingan dihapus.')}}else{toast('Kamu hanya bisa menghapus postingan milik akunmu.')}return}
+ const comment=e.target.closest('[data-comment]');if(comment){toast('Komentar bersama memerlukan backend online.');return}
+ const share=e.target.closest('[data-share]');if(share){const p=posts.find(x=>x.id===share.dataset.share);const text=(p?.caption||'Lihat postingan ini')+' — Rafvid';if(navigator.share)navigator.share({title:'Rafvid',text}).catch(()=>{});else if(navigator.clipboard)navigator.clipboard.writeText(text).then(()=>toast('Caption disalin.')).catch(()=>toast(text));else toast(text);return}
+});
+$$('[data-filter]').forEach(b=>b.addEventListener('click',()=>setFilter(b.dataset.filter)));
+$('#searchInput').addEventListener('input',e=>{query=e.target.value;render()});
+$('#navProfile').onclick=openProfile;$('#mobileProfile').onclick=openProfile;$('#profileClose').onclick=()=>hideModal('profileModal');
+$('#saveProfile').onclick=()=>{const name=$('#editName').value.trim();if(!name){toast('Nama tidak boleh kosong.');return}currentUser.name=name;users=users.map(u=>u.id===currentUser.id?currentUser:u);posts=posts.map(p=>p.userId===currentUser.id?{...p,creator:name}:p);if(save(KEYS.users,users)&&save(KEYS.posts,posts)){updateUserUI();render();hideModal('profileModal');toast('Profil diperbarui.')}};
+$('#logoutBtn').onclick=()=>{currentUser=null;localStorage.removeItem(KEYS.session);hideModal('profileModal');updateUserUI();render();toast('Kamu sudah keluar.')};
+$('#rightLogin')?.addEventListener('click',()=>openAuth('signup'));
+$$('.modal').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('show')}));
+const sid=localStorage.getItem(KEYS.session);currentUser=users.find(u=>u.id===sid)||null;updateUserUI();render();
+</script>
+</body>
+</html>
